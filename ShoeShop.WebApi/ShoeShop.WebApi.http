@@ -1,0 +1,59 @@
+@ShoeShop.WebApi_HostAddress = https://localhost:5001
+@ShoeShop.WebApi_SlippersCategoryId = 019ae898-0fa7-7bd8-9c78-211dbbc8e537
+@ShoeShop.WebApi_SlippersProductId = 223ae6b3-525e-4cd0-9c52-70a652018c76
+### Get Weather Forecast
+#
+GET {{ShoeShop.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+### Get All Categories
+#
+GET {{ShoeShop.WebApi_HostAddress}}/api/category/
+Accept: application/json
+
+### Get Category by ID
+#
+GET {{ShoeShop.WebApi_HostAddress}}/api/category/{{ShoeShop.WebApi_SlippersCategoryId}}
+Accept: application/json
+
+### Create New Category
+POST {{ShoeShop.WebApi_HostAddress}}/api/category/
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "Sandals",
+    "imageUrl": "https://res.cloudinary.com/dorjvwu4b/image/upload/v1764835060/sander_gsy931.png"
+}
+
+### Get All Products
+#
+GET {{ShoeShop.WebApi_HostAddress}}/api/product/
+Accept: application/json
+
+### Get Products by Category ID
+#
+GET {{ShoeShop.WebApi_HostAddress}}/api/product?category=Slippers
+Accept: application/json
+
+### Create New Product
+POST {{ShoeShop.WebApi_HostAddress}}/api/product/
+Accept: application/json
+Content-Type: application/json
+
+{
+    "name": "House Slippers",
+    "description": "Seasoned, Warm and comfortable slippers for indoor use.",
+    "price": 29.99,
+    "stock": 30,
+    "sku": "SLP-004",
+    "imageUrl": "https://res.cloudinary.com/dorjvwu4b/image/upload/v1764835060/slippers_abcd12.png",
+    "categoryIds": ["{{ShoeShop.WebApi_SlippersCategoryId}}"]
+}
+
+### Get Product by ID
+#
+GET {{ShoeShop.WebApi_HostAddress}}/api/product/{{ShoeShop.WebApi_SlippersProductId}}
+Accept: application/json
+
+
