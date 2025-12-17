@@ -31,7 +31,7 @@ namespace ShoeShop.WebApi.Controllers
         }
 
         // GET: api/products/[id]
-        [HttpGet("{id}", Name = nameof(GetProduct))] // named route
+        [HttpGet("{id}", Name = nameof(GetProduct))]
         [ProducesResponseType(200, Type = typeof(ProductWithCategoriesDto))]
         [ProducesResponseType(404)]
         public async Task<IActionResult> GetProduct(Guid id)
