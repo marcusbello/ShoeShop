@@ -1,3 +1,4 @@
+@ShoeShop = "ShoeShop API"
 @ShoeShop.WebApi_HostAddress = https://localhost:5001
 @ShoeShop.WebApi_SlippersCategoryId = 019ae898-0fa7-7bd8-9c78-211dbbc8e537
 @ShoeShop.WebApi_SlippersProductId = 223ae6b3-525e-4cd0-9c52-70a652018c76

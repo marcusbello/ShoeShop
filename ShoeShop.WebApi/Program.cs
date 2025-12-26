@@ -1,3 +1,4 @@
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 using ShoeShop.DataContext;
@@ -7,9 +8,20 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Configuration
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: false)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+    .AddEnvironmentVariables();
+
+// Resolve Postgres connection string: prefer environment variable `POSTGRES_CONNECTIONSTRING` or `DATABASE_URL` if set; otherwise fallback to configuration.
+var pgConnection = Environment.GetEnvironmentVariable("POSTGRES_CONNECTIONSTRING") ?? Environment.GetEnvironmentVariable("DATABASE_URL");
+if (string.IsNullOrWhiteSpace(pgConnection))
+    // Fallback to configuration (appsettings)
+    pgConnection = builder.Configuration.GetConnectionString("Postgres");
+
 builder.Services.AddDbContext<ShoeshopDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));
+    options.UseNpgsql(pgConnection));
 // Dependency Injection
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -38,25 +50,26 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// if (app.Environment.IsDevelopment())
+// {
+// app.MapOpenApi();
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.MapOpenApi();
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json",
-        "ShoeShop API Version 1");
-        c.SupportedSubmitMethods(new[] {
-            SubmitMethod.Get, SubmitMethod.Post,
-            SubmitMethod.Put, SubmitMethod.Delete
-            });
-    });
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json",
+    "ShoeShop API Version 1");
+    c.RoutePrefix = "swagger";
+    c.SupportedSubmitMethods(new[] {
+        SubmitMethod.Get, SubmitMethod.Post,
+        SubmitMethod.Put, SubmitMethod.Delete
+        });
+});
+// }
 
 app.UseHttpsRedirection();
 

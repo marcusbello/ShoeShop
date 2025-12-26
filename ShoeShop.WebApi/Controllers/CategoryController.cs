@@ -26,7 +26,8 @@ namespace ShoeShop.WebApi.Controllers
         }
 
         // GET: api/categories/[id]
-        [HttpGet("{id}", Name = nameof(GetCategory))] // named route
+        // GET: api/categories/019ae898-0fa7-7bd8-9c78-211dbbc8e537
+        [HttpGet("{id}", Name = nameof(GetCategory))]
         [ProducesResponseType(200, Type = typeof(Category))]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]

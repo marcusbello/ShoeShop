@@ -13,6 +13,7 @@ public class ShoeshopDbContext : DbContext
 
     public DbSet<Product> Products => Set<Product>();
     public DbSet<Category> Categories => Set<Category>();
+    public DbSet<Supplier> Suppliers => Set<Supplier>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -38,6 +39,16 @@ public class ShoeshopDbContext : DbContext
 
             entity.Property(p => p.Price)
                 .HasColumnType("decimal(18,2)");
+
+            entity.Property(p => p.SupplierPrice)
+                .HasColumnType("decimal(18,2)");
+
+            // One supplier -> many products (product requires a supplier)
+            entity.HasOne(p => p.Supplier)
+                .WithMany(s => s.Products)
+                .HasForeignKey(p => p.SupplierId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
         });
 
         // Category
@@ -48,6 +59,28 @@ public class ShoeshopDbContext : DbContext
             entity.Property(c => c.Name)
                 .IsRequired()
                 .HasMaxLength(150);
+        });
+
+        // Supplier
+        modelBuilder.Entity<Supplier>(entity =>
+        {
+            entity.HasKey(s => s.Id);
+
+            entity.Property(s => s.Name)
+                .IsRequired()
+                .HasMaxLength(200);
+
+            entity.Property(s => s.ContactName)
+                .HasMaxLength(150);
+
+            entity.Property(s => s.Email)
+                .HasMaxLength(200);
+
+            entity.Property(s => s.Phone)
+                .HasMaxLength(50);
+
+            entity.Property(s => s.Address)
+                .HasMaxLength(500);
         });
 
         // Many-to-many Product ↔ Category

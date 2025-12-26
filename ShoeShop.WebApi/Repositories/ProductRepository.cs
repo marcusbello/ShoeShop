@@ -33,6 +33,8 @@ public class ProductRepository : IProductRepository
             Stock = dto.Stock,
             Sku = dto.Sku ?? string.Empty,
             ImageUrl = dto.ImageUrl ?? string.Empty,
+            SupplierPrice = dto.SupplierPrice,
+            SupplierId = dto.SupplierId,    
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow,
         };
@@ -89,11 +91,13 @@ public class ProductRepository : IProductRepository
             return null;
 
         existing.Name = p.Name;
-        existing.Description = p.Description;
+        existing.Description = p.Description ?? existing.Description;
         existing.Price = p.Price;
         existing.Stock = p.Stock;
-        existing.Sku = p.Sku;
-        existing.ImageUrl = p.ImageUrl;
+        existing.Sku = p.Sku ?? existing.Sku;
+        existing.ImageUrl = p.ImageUrl ?? existing.ImageUrl;
+        existing.SupplierPrice = p.SupplierPrice ?? existing.SupplierPrice;
+        existing.SupplierId = p.SupplierId ?? existing.SupplierId;
         existing.UpdatedAt = DateTime.UtcNow;
 
         // Update categories
