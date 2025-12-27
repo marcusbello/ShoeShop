@@ -46,8 +46,10 @@ Content-Type: application/json
     "name": "House Slippers",
     "description": "Seasoned, Warm and comfortable slippers for indoor use.",
     "price": 29.99,
+    "supplierPrice": 15.00,
     "stock": 30,
     "sku": "SLP-004",
+    "supplierId": "",
     "imageUrl": "https://res.cloudinary.com/dorjvwu4b/image/upload/v1764835060/slippers_abcd12.png",
     "categoryIds": ["{{ShoeShop.WebApi_SlippersCategoryId}}"]
 }
