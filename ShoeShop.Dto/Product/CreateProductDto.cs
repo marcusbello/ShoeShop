@@ -10,7 +10,11 @@ public class CreateProductDto
     public decimal SupplierPrice { get; set; }
     public Guid SupplierId { get; set; }
     public int Stock { get; set; }
+    public bool? IsNew { get; set; }
+    public bool? IsFeatured { get; set; }
     public string? Sku { get; set; }
+    public string? Sizes { get; set; }
     public string? ImageUrl { get; set; }
+    public string? ImageUrls { get; set; }
     public List<Guid> CategoryIds { get; set; } = new();
 }

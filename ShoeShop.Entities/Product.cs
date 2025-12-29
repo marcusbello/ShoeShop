@@ -12,8 +12,16 @@ public class Product
     // Price from the supplier for this product
     public decimal SupplierPrice { get; set; }
     public int Stock { get; set; }
+    // IsNew flag
+    public bool IsNew { get; set; } = false;
+    // IsFeatured flag
+    public bool IsFeatured { get; set; } = false;
+    // Sizes available (e.g., "7,8,9,10")
+    public string Sizes { get; set; } = default!;
     // Image location (URL or path)
     public string ImageUrl { get; set; } = default!;
+    // Other images (URLs or paths)
+    public string ImageUrls { get; set; } = default!;
     // SKU for inventory systems
     public string Sku { get; set; } = default!;
     // Many-to-many → A product can belong to multiple categories

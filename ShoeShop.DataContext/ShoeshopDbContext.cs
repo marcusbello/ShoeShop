@@ -82,6 +82,12 @@ public class ShoeshopDbContext : DbContext
             entity.Property(s => s.Address)
                 .HasMaxLength(500);
         });
+        // One-to-many Supplier -> Products
+        modelBuilder.Entity<Supplier>()
+            .HasMany(s => s.Products)
+            .WithOne(p => p.Supplier)
+            .HasForeignKey(p => p.SupplierId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         // Many-to-many Product ↔ Category
         modelBuilder.Entity<Product>()

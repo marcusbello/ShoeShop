@@ -23,6 +23,7 @@ if (string.IsNullOrWhiteSpace(pgConnection))
 builder.Services.AddDbContext<ShoeshopDbContext>(options =>
     options.UseNpgsql(pgConnection));
 // Dependency Injection
+builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
