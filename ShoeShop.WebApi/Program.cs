@@ -8,6 +8,16 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Blazor", policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 // Configuration
 builder.Configuration
     .AddJsonFile("appsettings.json", optional: false)
@@ -54,6 +64,8 @@ builder.Services.AddSwaggerGen(options =>
 // builder.Services.AddOpenApi();
 
 var app = builder.Build();
+
+app.UseCors("Blazor");
 
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())

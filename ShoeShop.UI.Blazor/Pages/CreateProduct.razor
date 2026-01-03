@@ -1,0 +1,30 @@
+﻿@page "/products/create"
+@using ShoeShop.Dto.Product
+@using ShoeShop.UI.Blazor.Services
+@inject ProductService ProductService
+@inject NavigationManager Nav
+
+<h3>Create Product</h3>
+
+<EditForm Model="model" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+
+    <InputText class="form-control mb-2" @bind-Value="model.Name" placeholder="Name" />
+    <InputTextArea class="form-control mb-2" @bind-Value="model.Description" placeholder="Description" />
+    <InputNumber class="form-control mb-2" @bind-Value="model.Price" />
+    <InputNumber class="form-control mb-2" @bind-Value="model.Stock" />
+    <InputText class="form-control mb-2" @bind-Value="model.Sku" placeholder="SKU" />
+    <InputText class="form-control mb-2" @bind-Value="model.ImageUrl" placeholder="Image URL" />
+
+    <button class="btn btn-primary">Create</button>
+</EditForm>
+
+@code {
+    CreateProductDto model = new CreateProductDto();
+
+    async Task HandleSubmit()
+    {
+        await ProductService.CreateProductAsync(model);
+        Nav.NavigateTo("/products");
+    }
+}

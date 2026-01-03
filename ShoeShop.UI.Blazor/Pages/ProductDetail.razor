@@ -1,0 +1,30 @@
+﻿@page "/products/{Id:guid}"
+@using ShoeShop.Dto.Product
+@using ShoeShop.UI.Blazor.Services
+@inject ProductService ProductService
+
+<h3>Product Detail</h3>
+
+@if (product == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <img src="@product.ImageUrl" width="200" />
+    <h4>@product.Name</h4>
+    <p>@product.Description</p>
+    <p><b>SKU:</b> @product.Sku</p>
+    <p><b>Price:</b> ₦@product.Price</p>
+    <p><b>Stock:</b> @product.Stock</p>
+}
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+    ProductDto? product;
+
+    protected override async Task OnInitializedAsync()
+    {
+        product = await ProductService.GetProductAsync(Id);
+    }
+}

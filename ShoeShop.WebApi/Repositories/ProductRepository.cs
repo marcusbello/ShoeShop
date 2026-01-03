@@ -27,7 +27,7 @@ public class ProductRepository : IProductRepository
         var product = new Product
         {
             Id = Guid.NewGuid(),
-            Name = dto.Name,
+            Name = dto.Name ?? string.Empty,
             Description = dto.Description ?? string.Empty,
             Price = dto.Price,
             Stock = dto.Stock,

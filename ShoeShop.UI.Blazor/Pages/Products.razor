@@ -1,0 +1,32 @@
+﻿@page "/products"
+@using ShoeShop.Dto.Product
+@using ShoeShop.UI.Blazor.Services
+@inject ProductService ProductService
+
+<h3>Product</h3>
+
+@if (products == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <ul class="list-group">
+        @foreach (var p in products)
+        {
+            <li class="list-group-item">
+                <a href="/products/@p.Id">@p.Name</a>
+                <span class="float-end">₦@p.Price</span>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    List<ProductDto>? products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await ProductService.GetProductsAsync();
+    }
+}
